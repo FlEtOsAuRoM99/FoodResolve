@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,33 +21,21 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
-    private Button dateButton;
-    private File file;
+    private Button dateButton; //for two buttons
+    private TextView textBuyDate;
+    private File pFiles;
+    private static final String TEXTFILE = "history.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initDatePicker();
-        file = new File("res/", "history.txt");
-        try {
-            if(fileExists()){
-                System.out.print("File esistente");
-            }else {
-                System.out.print("File non esistente, creato");
-            }
-        }catch (Exception e){
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-        dateButton = findViewById(R.id.datePickerButton_Buy);
-        dateButton.setText(getTodaysDate());
+        pFiles = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        textBuyDate = (TextView) findViewById(R.id.textView_Buy);
+        textBuyDate.setText(getTodaysDate());
         dateButton = findViewById(R.id.datePickerButton_Deadline);
         dateButton.setText(getTodaysDate());
-    }
-    private boolean fileExists() throws IOException {
-        if (file.createNewFile())
-            return false;
-        return true;
     }
 
     private String getTodaysDate()
@@ -132,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         EditText name = findViewById(R.id.editText_Name);
         EditText type = findViewById(R.id.editText_Type);
         EditText descr = findViewById(R.id.editTextMultiline_Description);
-        Button dateBuy = findViewById(R.id.datePickerButton_Buy);
         Button dateDeadline = findViewById(R.id.datePickerButton_Deadline);
 
         if(name.getText().toString().equals("")) {
@@ -146,11 +135,16 @@ public class MainActivity extends AppCompatActivity {
         EditText amount = findViewById(R.id.editTextNumber_Amount);
         if(amount.getText().toString().equals(""))
             addText = addText + "quantità non inserita\n";
-
+        try {
+            float f = Float.parseFloat(amount.getText().toString());
+        }catch (Exception e){
+            addText = addText + "la quantità non può essere una stringa\n";
+        }
         if(!addText.equals(""))
             text.setText(addText);
         else{
-            outputEnd = dateBuy.getText().toString() + "**" + dateDeadline.getText().toString() + "**"
+            text.setText("");
+            outputEnd = textBuyDate.getText().toString() + "**" + dateDeadline.getText().toString() + "**"
                     + name.getText().toString() + "**" + type.getText().toString() + "**"
                     + descr.getText().toString() + "**" + amount.getText().toString()+"Kg" + "==%&";
 
@@ -159,10 +153,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void writeToFile(String data) {
+        data = data+"\n";
         try {
-            FileOutputStream outputStreamWriter = new FileOutputStream(file);
-            outputStreamWriter.write(data.getBytes());
-            outputStreamWriter.close();
+            FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
+            fos.write(data.getBytes());
+            fos.close();
         }
         catch (IOException e) {
             Log.e("Exception", "File write failed: " + e);

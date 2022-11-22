@@ -24,14 +24,13 @@
         android:id="@+id/Button_AddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
         android:onClick="onClickTest"
         android:text="Aggiungi prodotto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.824"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber_Amount"
-        app:layout_constraintVertical_bias="0.094"
         tools:text="Button_AddProduct" />
 
     <EditText
@@ -96,14 +95,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-    <Button
-        android:id="@+id/datePickerButton_Buy"
-        style="?android:spinnerStyle"
+    <TextView
+        android:id="@+id/textView_Buy"
         android:layout_width="222dp"
         android:layout_height="59dp"
         android:layout_marginTop="24dp"
-        android:onClick="openDatePicker"
-        android:text="mm - dd - yy"
+        android:text="dd - mm - yy"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -119,14 +116,14 @@
         android:layout_width="222dp"
         android:layout_height="59dp"
         android:onClick="openDatePicker"
-        android:text="mm - dd - yy"
+        android:text="dd - mm - yy"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePickerButton_Buy"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Buy"
         app:layout_constraintVertical_bias="0.085" />
 
     <TextView
@@ -155,22 +152,6 @@
         app:layout_constraintTop_toBottomOf="@+id/datePickerButton_Deadline"
         app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
-        android:id="@+id/editTextNumber_Amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Quantità (in kg)"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Amount"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/textView_Test"
         android:layout_width="357dp"
@@ -181,5 +162,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Button_AddProduct" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data di scadenza"
+        app:layout_constraintBottom_toBottomOf="@+id/datePickerButton_Deadline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/datePickerButton_Deadline"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editTextNumber_Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Quantità (in Kg)"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Amount"
+        app:layout_constraintVertical_bias="0.011" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
