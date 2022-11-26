@@ -21,9 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+
         </activity>
         <activity
             android:name=".AddProductActivity"
@@ -32,8 +30,8 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.foodresolve.app.MainActivity"/>
         </activity>
     </application>
 

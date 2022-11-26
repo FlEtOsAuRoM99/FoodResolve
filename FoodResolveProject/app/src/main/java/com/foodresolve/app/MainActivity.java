@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpenProductActivity(View view) {
         try {
-            Intent intent_fabOpenPruductActivity = new Intent(MainActivity.this, AddProductActivity.class);
-            startActivity(intent_fabOpenPruductActivity);
+            Intent intent_fabOpen = new Intent(MainActivity.this, AddProductActivity.class);
+            startActivity(intent_fabOpen);
         }catch (Exception e){
             Log.e("Exception", "Intent error integrety: " + e);
         }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -118,13 +119,12 @@ public class AddProductActivity extends AppCompatActivity {
 
     }
     private void writeToFile(String data) {
-        data = data+"\n";
+        data = data + "\n";
         try {
             FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
             fos.write(data.getBytes());
             fos.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e);
         }
     }
