@@ -14,14 +14,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Calendar;
 
 public class AddProductActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button dateButton; //for two buttons
     private TextView textBuyDate;
+    private int index_FileLine;
     private static final String TEXTFILE = "history.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +37,30 @@ public class AddProductActivity extends AppCompatActivity {
         textBuyDate.setText(getTodaysDate());
         dateButton = findViewById(R.id.datePickerButton_Deadline);
         dateButton.setText(getTodaysDate());
+        index_FileLine = -1;
+        try {
+            FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
+            fos.close();
+            FileInputStream fis = openFileInput(TEXTFILE);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            String line;
+            String splitString = "==%&";
+            while ((line = br.readLine()) != null) {
+                try {
+                    System.out.println(line);
+                    index_FileLine = Integer.parseInt(line.split(splitString)[0]);
+                }catch (Exception e){
+                    Log.e("Exception", "Value unuseless " + e);
+                }
+            }
+
+            System.out.println(index_FileLine);
+            isr.close();
+            fis.close();
+        }catch (Exception e){
+            Log.e("Exception", "File write failed: " + e);
+        }
     }
 
     private String getTodaysDate()
@@ -101,18 +129,21 @@ public class AddProductActivity extends AppCompatActivity {
         EditText amount = findViewById(R.id.editTextNumber_Amount);
         if(amount.getText().toString().equals(""))
             addText = addText + "quantità non inserita\n";
-        try {
-            float f = Float.parseFloat(amount.getText().toString());
-        }catch (Exception e){
-            addText = addText + "la quantità non può essere una stringa\n";
+        else {
+            try {
+                float f = Float.parseFloat(amount.getText().toString());
+            } catch (Exception e) {
+                addText = addText + "la quantità non può essere una stringa\n";
+            }
         }
+
         if(!addText.equals(""))
             text.setText(addText);
         else{
             text.setText("");
-            outputEnd = textBuyDate.getText().toString() + "**" + dateDeadline.getText().toString() + "**"
-                    + name.getText().toString() + "**" + type.getText().toString() + "**"
-                    + descr.getText().toString() + "**" + amount.getText().toString()+"Kg" + "==%&";
+            outputEnd = dateDeadline.getText().toString() + "==%&"
+                    + name.getText().toString() + "==%&" + type.getText().toString() + "==%&"
+                    + descr.getText().toString() + "==%&" + amount.getText().toString()+"Kg" + "==%&";
 
             writeToFile(outputEnd);
         }
@@ -120,8 +151,10 @@ public class AddProductActivity extends AppCompatActivity {
     }
     private void writeToFile(String data) {
         data = data + "\n";
+
         try {
             FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
+            data = (index_FileLine + 1) + "==%&" + data;
             fos.write(data.getBytes());
             fos.close();
         } catch (IOException e) {
