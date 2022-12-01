@@ -33,6 +33,7 @@ public class AddProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         initDatePicker();
+        MainActivity model = (MainActivity) getIntent().getSerializableExtra("sendFile");
         textBuyDate = (TextView) findViewById(R.id.textView_Buy);
         textBuyDate.setText(getTodaysDate());
         dateButton = findViewById(R.id.datePickerButton_Deadline);
@@ -118,22 +119,21 @@ public class AddProductActivity extends AppCompatActivity {
         EditText descr = findViewById(R.id.editTextMultiline_Description);
         Button dateDeadline = findViewById(R.id.datePickerButton_Deadline);
 
-        if(name.getText().toString().equals("")) {
-            addText = "nome non inserito\n";
-        }
+        if(name.getText().toString().equals(""))
+            addText = "Nome non inserito\n";
 
         if (type.getText().toString().equals(""))
-            addText = addText + "tipo non inserito\n";
+            addText = addText + "Tipo non inserito\n";
 
 
         EditText amount = findViewById(R.id.editTextNumber_Amount);
         if(amount.getText().toString().equals(""))
-            addText = addText + "quantità non inserita\n";
+            addText = addText + "Quantità non inserita\n";
         else {
             try {
                 float f = Float.parseFloat(amount.getText().toString());
             } catch (Exception e) {
-                addText = addText + "la quantità non può essere una stringa\n";
+                addText = addText + "La quantità non può essere una stringa\n";
             }
         }
 
