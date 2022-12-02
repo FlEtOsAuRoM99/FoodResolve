@@ -40,20 +40,20 @@ public class AddProductActivity extends AppCompatActivity {
         dateButton.setText(getTodaysDate());
         index_FileLine = -1;
         try {
-            FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
-            fos.close();
             FileInputStream fis = openFileInput(TEXTFILE);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             String line;
             String splitString = "==%&";
             while ((line = br.readLine()) != null) {
+                System.out.println("------------------------------------------------");
                 try {
                     System.out.println(line);
                     index_FileLine = Integer.parseInt(line.split(splitString)[0]);
                 }catch (Exception e){
                     Log.e("Exception", "Value unuseless " + e);
                 }
+                System.out.println("------------------------------------------------");
             }
 
             System.out.println(index_FileLine);
@@ -141,8 +141,8 @@ public class AddProductActivity extends AppCompatActivity {
             text.setText(addText);
         else{
             text.setText("");
-            outputEnd = dateDeadline.getText().toString() + "==%&"
-                    + name.getText().toString() + "==%&" + type.getText().toString() + "==%&"
+            outputEnd = name.getText().toString() + "==%&"
+                    + dateDeadline.getText().toString() + "==%&" + type.getText().toString() + "==%&"
                     + descr.getText().toString() + "==%&" + amount.getText().toString()+"Kg" + "==%&";
 
             writeToFile(outputEnd);
@@ -153,10 +153,12 @@ public class AddProductActivity extends AppCompatActivity {
         data = data + "\n";
 
         try {
-            FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_APPEND);
             data = (index_FileLine + 1) + "==%&" + data;
             fos.write(data.getBytes());
             fos.close();
+            index_FileLine = index_FileLine + 1;
+            System.out.println(index_FileLine);
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e);
         }
