@@ -149,6 +149,9 @@ public class AddProductActivity extends AppCompatActivity {
         }
 
     }
+
+    //This part of code will go to new class "DataManagement"
+    //------------------------ DataManagement --------------------------------
     private void writeToFile(String data) {
         data = data + "\n";
 
@@ -163,4 +166,5 @@ public class AddProductActivity extends AppCompatActivity {
             Log.e("Exception", "File write failed: " + e);
         }
     }
+    //------------------------- DataManagement -------------------------------
 }

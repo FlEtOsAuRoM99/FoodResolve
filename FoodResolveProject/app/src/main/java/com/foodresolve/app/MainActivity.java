@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+
 public class MainActivity extends AppCompatActivity {
     private String TEXTFILE = "history.txt";
     private Vector<String[]> allFile = new Vector<>();
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //This part of code will go to new class "DataManagement"
+        //------------------------ DataManagement --------------------------------
         try {
             FileInputStream fis = openFileInput(TEXTFILE);
             InputStreamReader isr = new InputStreamReader(fis);
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("------------------------------------------------");
 
             }
+            //This part not in class (but i'm thinking it over, maybe in one method..)------------------
             if(value != -1) {
                 TextView test = (TextView) findViewById(R.id.textView_Test);
                 test.setText("");
@@ -54,11 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     test.append(addProductInFile);
                 }
             }
-            /*
-            for(int i = 0; i < value; i++){
-                for(int j = 0; j < allFile[i]; )
-            }
-            */
+            //-------------------------------------------------------------------------------
+
             br.close();
             isr.close();
             fis.close();
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.e("Exception", "File read failed: " + e);
         }
+        //------------------------ DataManagement --------------------------------
     }
 
     public void onClickOpenProductActivity(View view) {
